@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
-	"microservices-learn/application"
 	"os"
 	"os/signal"
+
+	"github.com/RibunLoc/microservices-learn/application"
 )
 
 func main() {
