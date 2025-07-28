@@ -17,7 +17,7 @@ type Order struct {
 }
 
 type LineItem struct {
-	ItemID   uuid.UUID
-	Quantity uint
-	Price    uint
+	ItemID   uuid.UUID `json:"item_id"`
+	Quantity uint      `json:"quantity"`
+	Price    uint      `json:"price"`
 }
