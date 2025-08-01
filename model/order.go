@@ -8,10 +8,10 @@ import (
 
 type Order struct {
 	OrderID     uint64     `json:"order_id"`
-	CustomerID  uuid.UUID  `json:"customer_id`
-	LineItems   []LineItem `json:"Line_items`
-	OrderStatus string     `json:"created-at`
-	CreateAt    *time.Time `json:"shipped_at"`
+	CustomerID  uuid.UUID  `json:"customer_id"`
+	LineItems   []LineItem `json:"Line_items"`
+	OrderStatus string     `json:"order_status"`
+	CreateAt    *time.Time `json:"created_at"`
 	ShippedAt   *time.Time `json:"shipped_at"`
 	CompletedAt *time.Time `json:"completed_at"`
 }
