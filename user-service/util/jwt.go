@@ -2,6 +2,8 @@ package util
 
 import (
 	"errors"
+	"net/http"
+	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -40,4 +42,37 @@ func ParseJWT(tokenStr, jwtSecret string) (jwt.MapClaims, error) {
 	}
 
 	return nil, errors.New("invalid token")
+}
+
+// Lấy userid từ JWT
+func GetUserIDFromRequest(r *http.Request, jwtSecret string) (string, bool) {
+	// Lấy token từ header Authorization
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		return "", false
+	}
+
+	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 || !strings.EqualFold(parts[0], "Bearer") {
+		return "", false
+	}
+	tokenStr := parts[1]
+
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		return []byte(jwtSecret), nil
+	})
+	if err != nil || !token.Valid {
+		return "", false
+	}
+
+	// Lấy claim và user_id
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return "", false
+	}
+	userID, ok := claims["user_id"].(string)
+	if !ok {
+		return "", false
+	}
+	return userID, true
 }

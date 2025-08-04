@@ -14,7 +14,7 @@ type UserRegister struct {
 	Repo *repository.RedisMongo
 }
 
-func (h *UserRegister) CreateUser(w http.ResponseWriter, r *http.Request) {
+func (h *UserRegister) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 	var body struct {
 		Email    string `json:"email" binding:"required,email"`
 		Password string `json:"password" binding:"required,min=6"`
