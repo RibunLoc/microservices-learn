@@ -11,6 +11,7 @@ import (
 
 	"github.com/RibunLoc/microservices-learn/model"
 	"github.com/RibunLoc/microservices-learn/repository/order"
+	"github.com/RibunLoc/microservices-learn/util"
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 )
@@ -24,8 +25,9 @@ type Order struct {
 func (h *Order) Create(w http.ResponseWriter, r *http.Request) {
 	// Định nghĩa struct tạm thời đề nhận dữ liệu JSON từ client gửi lên
 	var body struct {
-		CustomerID uuid.UUID        `json:"customer_id"` // ID của khách hàng
-		LineItems  []model.LineItem `json:"line_items"`  // Danh sách các mặt hàng trong đơn
+		CustomerID  uuid.UUID        `json:"customer_id"` // ID của khách hàng
+		LineItems   []model.LineItem `json:"line_items"`  // Danh sách các mặt hàng trong đơn
+		OrderStatus string           `json:"order_status"`
 	}
 
 	// Giải mã (decode) dữ liệu JSON từ body request vào struct `body`
@@ -40,10 +42,11 @@ func (h *Order) Create(w http.ResponseWriter, r *http.Request) {
 
 	// Tạo struct Order từ dữ liệu nhận được
 	order := model.Order{
-		OrderID:    rand.Uint64(), // Tạo ID ngẫu nhiên cho đơn hàng
-		CustomerID: body.CustomerID,
-		LineItems:  body.LineItems,
-		CreateAt:   &now,
+		OrderID:     rand.Uint64(), // Tạo ID ngẫu nhiên cho đơn hàng
+		CustomerID:  body.CustomerID,
+		LineItems:   body.LineItems,
+		OrderStatus: body.OrderStatus,
+		CreateAt:    &now,
 	}
 
 	// Gọi Repo để chèn đơn hàng vào Redis
@@ -195,7 +198,7 @@ func (h *Order) UpdateByID(w http.ResponseWriter, r *http.Request) {
 	// Khai báo giá trị trạng thái hợp lệ và thời gian hiện tại
 	const completedStatus = "completed"
 	const shippedStatus = "shipped"
-	now := time.Now().UTC()
+	now := util.CustomTime(time.Now())
 
 	// xử lsy cập nhật trạng thái đơn hàng theo logic nghiệp vụ
 	switch body.Status {

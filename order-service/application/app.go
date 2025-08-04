@@ -18,7 +18,9 @@ type App struct {
 func New(config Config) *App {
 	app := &App{
 		rdb: redis.NewClient(&redis.Options{
-			Addr: config.RedisAddress,
+			Addr:     config.RedisAddress,
+			Username: config.Username,
+			Password: config.Password,
 		}),
 		config: config,
 	}
