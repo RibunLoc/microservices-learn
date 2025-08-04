@@ -1,1 +1,4 @@
+# Bỏ qua các file môi trường cá nhân/dev
 .env
+.env.*
+!.env.example   # vẫn cho phép lưu file ví dụ cấu hình
