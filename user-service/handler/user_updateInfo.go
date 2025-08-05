@@ -3,8 +3,10 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-	repository "user-service/repository/user"
-	"user-service/util"
+
+	"github.com/RibunLoc/microservices-learn/user-service/util"
+
+	repository "github.com/RibunLoc/microservices-learn/user-service/repository/user"
 
 	"github.com/go-chi/chi/v5"
 	"go.mongodb.org/mongo-driver/bson"

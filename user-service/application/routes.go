@@ -2,8 +2,9 @@ package application
 
 import (
 	"net/http"
-	"user-service/handler"
-	repository "user-service/repository/user"
+
+	"github.com/RibunLoc/microservices-learn/user-service/handler"
+	repository "github.com/RibunLoc/microservices-learn/user-service/repository/user"
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"

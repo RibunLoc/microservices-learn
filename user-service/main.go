@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"user-service/application"
+
+	"github.com/RibunLoc/microservices-learn/user-service/application"
 )
 
 func main() {

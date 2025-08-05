@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/RibunLoc/microservices-learn/user-service/proto;userpb";
+
+service UserService {
+  rpc GetUserByID (GetUserByIDRequest) returns (GetUserByIDResponse);
+}
+
+message GetUserByIDRequest {
+  string user_id = 1;
+}
+
+message GetUserByIDResponse {
+  string user_id = 1;
+  string email = 2;
+  string fullname = 3;
+  string role = 4;
+}

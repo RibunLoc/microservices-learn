@@ -3,8 +3,9 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-	repository "user-service/repository/user"
-	"user-service/util"
+
+	repository "github.com/RibunLoc/microservices-learn/user-service/repository/user"
+	"github.com/RibunLoc/microservices-learn/user-service/util"
 
 	"github.com/go-chi/chi/v5"
 )

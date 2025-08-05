@@ -1,7 +1,7 @@
 package model
 
 import (
-	"user-service/util"
+	"github.com/RibunLoc/microservices-learn/user-service/util"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

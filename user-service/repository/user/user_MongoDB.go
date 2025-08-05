@@ -3,7 +3,8 @@ package repository
 import (
 	"context"
 	"errors"
-	"user-service/model"
+
+	"github.com/RibunLoc/microservices-learn/user-service/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

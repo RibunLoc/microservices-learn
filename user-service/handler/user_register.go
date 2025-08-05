@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-	"user-service/model"
-	repository "user-service/repository/user"
-	"user-service/util"
+
+	"github.com/RibunLoc/microservices-learn/user-service/model"
+	"github.com/RibunLoc/microservices-learn/user-service/util"
+
+	repository "github.com/RibunLoc/microservices-learn/user-service/repository/user"
 )
 
 type UserRegister struct {
