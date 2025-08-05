@@ -50,3 +50,9 @@ func (ct *CustomTime) UnmarshalBSONValue(t bsontype.Type, data []byte) error {
 	*ct = CustomTime(time.UnixMilli(millis).UTC())
 	return nil
 }
+
+func (ct CustomTime) String() string {
+	loc, _ := time.LoadLocation("Asia/Ho_Chi_Minh")
+	vnTime := time.Time(ct).In(loc)
+	return vnTime.Format(layout)
+}

@@ -48,12 +48,27 @@ func (a *App) loadUserLogin(router chi.Router) {
 }
 
 func (a *App) loadUserChangePassword(router chi.Router) {
-	userHandler := &handler.UserChangePassword{
+	// khởi tạo các handler cho việc thao tác người dùng
+	userChangePassHandler := &handler.UserChangePassword{
+		Repo: &repository.RedisMongo{
+			Collection: a.mgdb.Collection("users"),
+			JwtSecret:  a.config.JwtSecret,
+		},
+	}
+	userUpdateHandler := &handler.UserUpdateInfo{
+		Repo: &repository.RedisMongo{
+			Collection: a.mgdb.Collection("users"),
+			JwtSecret:  a.config.JwtSecret,
+		},
+	}
+	userGetHandler := &handler.UserGetInfo{
 		Repo: &repository.RedisMongo{
 			Collection: a.mgdb.Collection("users"),
 			JwtSecret:  a.config.JwtSecret,
 		},
 	}
 
-	router.Put("/change-password", userHandler.ChangePasswordHandler)
+	router.Put("/{id}/change-password", userChangePassHandler.ChangePasswordHandler)
+	router.Put("/{id}/update-info", userUpdateHandler.UpdateInfoHandler)
+	router.Get("/{id}", userGetHandler.GetInfoHandler) // Thêm route để lấy thông tin người dùng
 }

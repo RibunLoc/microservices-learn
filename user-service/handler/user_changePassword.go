@@ -5,6 +5,8 @@ import (
 	"net/http"
 	repository "user-service/repository/user"
 	"user-service/util"
+
+	"github.com/go-chi/chi/v5"
 )
 
 type UserChangePassword struct {
@@ -12,12 +14,20 @@ type UserChangePassword struct {
 }
 
 func (h *UserChangePassword) ChangePasswordHandler(w http.ResponseWriter, r *http.Request) {
+	targetUserID := chi.URLParam(r, "id")
+
 	// Lấy userid từ request
 	userID, ok := util.GetUserIDFromRequest(r, h.Repo.JwtSecret)
 	if !ok {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
+
+	if userID != targetUserID {
+		http.Error(w, "Forbidden", http.StatusForbidden)
+		return
+	}
+
 	var body struct {
 		OldPassword string `json:"old_password"`
 		NewPassword string `json:"new_password"`

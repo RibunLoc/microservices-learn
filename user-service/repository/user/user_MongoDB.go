@@ -71,3 +71,22 @@ func (r *RedisMongo) UpdatePassword(ctx context.Context, userID, hash string) er
 	}
 	return nil
 }
+
+func (r *RedisMongo) UpdateUserFields(ctx context.Context, userId string, updateFields bson.M) error {
+	oid, err := primitive.ObjectIDFromHex(userId)
+	if err != nil {
+		return errors.New("invalid user ID")
+	}
+	filter := bson.M{"_id": oid}
+
+	update := bson.M{"$set": updateFields}
+
+	res, err := r.Collection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return err
+	}
+	if res.MatchedCount == 0 {
+		return errors.New("user not found")
+	}
+	return nil
+}
